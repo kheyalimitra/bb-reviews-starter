@@ -15,6 +15,7 @@ modules:
     requires:
       - name: bb-reviews-starter-db-hdi-container
       - name: bb-reviews-starter-uaa
+      - name: bb-reviews-starter-logs
   - name: bb-reviews-starter-db
     type: hdb
     path: db
@@ -27,7 +28,7 @@ resources:
   - name: bb-reviews-starter-uaa
     type: org.cloudfoundry.managed-service
     parameters:
-      service-plan: default
+      service-plan: application
       service: xsuaa
       config:
         xsappname: bb-reviews-starter-${space}
@@ -36,3 +37,8 @@ resources:
     type: com.sap.xs.hdi-container
     properties:
       hdi-container-name: ${service-name}
+  - name: bb-reviews-starter-logs
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service-plan: lite
+      service: application-logs
