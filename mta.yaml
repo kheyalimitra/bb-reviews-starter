@@ -7,7 +7,7 @@ modules:
     path: srv
     parameters:
       memory: 512M
-      disk-quota: 256M
+      disk-quota: 512M
     provides:
       - name: srv_api
         properties:
