@@ -17,7 +17,8 @@
         "@sap/textbundle": "^3.0.0",
         "@sap/cds": "^3.16",
         "hdb": "^0.17.0",
-        "express": "^4.17.1"
+        "express": "^4.17.1",
+        "cf-nodejs-logging-support": "^5.3.2"
     },
     "devDependencies": {
         "eslint": "^6.2.2"

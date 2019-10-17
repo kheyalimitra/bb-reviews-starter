@@ -2,8 +2,19 @@
 
 const bodyParser = require('body-parser')
 const express = require('express')
+const log = require('cf-nodejs-logging-support')
 
 module.exports = function (app) {
+	var logLevel = process.env.LOG_LEVEL || "debug";
+
+	log.setLoggingLevel(logLevel);
+	if (process.env.LOG_PATTERN) {
+		log.setLogPattern(process.env.LOG_PATTERN);
+	}
+
+	app.use(log.logNetwork);
+	app.logger = log;
+
 	const hanaReviewsService = require('./hana-reviews-service')
 	app.reviewsService = new hanaReviewsService()
 
