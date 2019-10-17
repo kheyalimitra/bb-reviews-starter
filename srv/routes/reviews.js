@@ -3,7 +3,7 @@ const HTTP_NO_CONTENT = 204
 const HTTP_CREATED = 201
 const HTTP_CONFLICT = 409
 
-module.exports = function(app) {
+module.exports = function (app) {
 
 	app.get('/api/v1/reviews', async function readAll(req, res) {
 		const result = await app.reviewsService.getAll(req)
@@ -28,7 +28,7 @@ module.exports = function(app) {
 			return res.status(HTTP_CONFLICT).end()
 		}
 		const reviewee_email = req.body.reviewee_email
-		await app.reviewsService.getAverageRating(reviewee_email)		
+		await app.reviewsService.getAverageRating(reviewee_email)
 		res.status(HTTP_CREATED).location(req.body.component_name).end()
 	})
 
@@ -38,8 +38,8 @@ module.exports = function(app) {
 	})
 
 	app.get('/api/v1/sleep', async function sleep(req, res) {
-            await app.reviewsService.sleep(req.db)
-			let now = new Date();
-			return res.type("text/plain").send(`Sleep time is over: ${now.toLocaleTimeString()}`)
+		await app.reviewsService.sleep(req.db)
+		let now = new Date();
+		return res.type("text/plain").send(`Sleep time is over: ${now.toLocaleTimeString()}`)
 	})
 };
