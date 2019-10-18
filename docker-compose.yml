@@ -1,0 +1,10 @@
+version: '3'
+services:
+  web:
+    build: .
+    ports:
+      - "4004:4004"
+  srv:
+    build: ./srv
+    ports:
+      - "4000:4000"
