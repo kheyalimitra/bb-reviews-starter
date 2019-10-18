@@ -75,3 +75,5 @@ package-lock.json
 *.orig
 mta_archives/
 default-*.json
+# mta related
+*.mtar
