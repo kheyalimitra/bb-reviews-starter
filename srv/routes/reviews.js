@@ -2,6 +2,7 @@
 const HTTP_NO_CONTENT = 204
 const HTTP_CREATED = 201
 const HTTP_CONFLICT = 409
+const publisher = require('../utils/publisher')
 
 module.exports = function(app) {
 
@@ -28,8 +29,15 @@ module.exports = function(app) {
 			return res.status(HTTP_CONFLICT).end()
 		}
 		const reviewee_email = req.body.reviewee_email
-		await app.reviewsService.getAverageRating(reviewee_email)		
+		var rating = await app.reviewsService.getAverageRating(reviewee_email, req)		
+		console.log("rating.average_rating: " + rating.average_rating);
 		res.status(HTTP_CREATED).location(req.body.component_name).end()
+
+		var pub = require('../utils/publisher');
+		var url = 'amqp://localhost'
+		var queue = 'hello';
+		var msg = rating.average_rating;
+		pub.publish(url, queue, msg);
 	})
 
 	app.delete('/api/v1/reviews', async function deleteAll(req, res) {
