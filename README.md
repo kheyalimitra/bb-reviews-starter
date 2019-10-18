@@ -1,6 +1,10 @@
 # bb-reviews-starter
 Bulletin Board Reviews Starter Project
 
+## Logging
+
+For logging, we're using [SAP/cf-nodejs-logging-support](https://github.com/SAP/cf-nodejs-logging-support). For adding any custom logs, please add according to the [Custom Logs Documentation](https://github.com/SAP/cf-nodejs-logging-support#custom-logs). **DO NOT USE console.log**, always use these custom logs.
+
 ## Support
 This project is provided "as-is": there is no guarantee that raised issues will be answered or addressed in future releases.
 
