@@ -17,6 +17,11 @@ You can use the below commands to build and run the docker container:
 docker-compose build
 docker-compose start
 ```
+## Automatic Scaling
+For the performance of the application, sometimes we cannot improve the hardware anymore (vertical scaling). Therefore, we need to automatically increase the number of instances by horizontal scaling.
+
+For monitoring, we will bind a autoscaler instance to the application via policy of certain metrics. The policy will define the rules and related thresholds for increasing/decreasing instances.
+ 
 
 ## Support
 This project is provided "as-is": there is no guarantee that raised issues will be answered or addressed in future releases.
