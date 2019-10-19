@@ -1,0 +1,48 @@
+{
+    "instance_min_count": 1,
+    "instance_max_count": 5,
+    "scaling_rules": [
+        {
+            "metric_type": "memoryutil",
+            "threshold": 90,
+            "operator": ">=",
+            "adjustment": "+1"
+        },
+        {
+            "metric_type": "memoryutil", 
+            "threshold": 30, 
+            "operator": "<", 
+            "adjustment": "-1" 
+        },
+       {
+           "metric_type": "throughput",
+           "threshold": 50,
+           "operator": "<=",
+           "adjustment": "-1"
+       },
+       {
+           "metric_type": "cpu",
+           "threshold": 85,
+           "operator": ">",
+           "adjustment": "+1"
+       },
+       {
+           "metric_type": "cpu",
+           "threshold": 40,
+           "operator": "<=",
+           "adjustment": "-1"
+       },
+        {
+           "metric_type": "responsetime",
+           "threshold": 900,
+           "operator": ">",
+           "adjustment": "+1"
+       },
+       {
+           "metric_type": "responsetime",
+           "threshold": 900,
+           "operator": "<=",
+           "adjustment": "-1"
+       }
+    ]
+}
