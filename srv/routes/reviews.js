@@ -37,15 +37,22 @@ module.exports = function(app) {
 		if (reviewee_email == null || rating.average_rating == null){
 			console.log("ERROR: reviewee_email or average_rating is null!")
 		}
-		var msg = "[CREATE]" + "reviewee_email:" + reviewee_email + ";rating:" + rating.average_rating
-		publisher.publish(MSG_URL, QUEUE, msg)
+		
+		var msg = JSON.stringify({
+			"type" : "create",
+			"contact" : reviewee_email,
+			"rating": rating.average_rating
+		});
+		publisher.publish(MSG_URL, QUEUE, JSON.stringify(msg))
 	})
 
 	app.delete('/api/v1/reviews', async function deleteAll(req, res) {
 		await app.reviewsService.deleteAll(req)
 		res.status(HTTP_NO_CONTENT).end()
 
-		var msg = "[DELETE]"
+		var msg = JSON.stringify({
+			"type" : "delete",
+		});
 		publisher.publish(MSG_URL, QUEUE, msg);
 	})
 
