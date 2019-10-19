@@ -20,10 +20,6 @@ var sub = new Object({
 
                 console.log(" [x] Sent %s", msg);
             });
-            // setTimeout(function() {
-            //     connection.close();
-            //     process.exit(0);
-            // }, 500);
         });
     }
 })

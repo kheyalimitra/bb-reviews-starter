@@ -3,6 +3,8 @@ const HTTP_NO_CONTENT = 204
 const HTTP_CREATED = 201
 const HTTP_CONFLICT = 409
 const publisher = require('../utils/publisher')
+const MSG_URL = "amqp://localhost"
+const QUEUE = "endurance"
 
 module.exports = function(app) {
 
@@ -30,19 +32,21 @@ module.exports = function(app) {
 		}
 		const reviewee_email = req.body.reviewee_email
 		var rating = await app.reviewsService.getAverageRating(reviewee_email, req)		
-		console.log("rating.average_rating: " + rating.average_rating);
 		res.status(HTTP_CREATED).location(req.body.component_name).end()
 
-		var pub = require('../utils/publisher');
-		var url = 'amqp://localhost'
-		var queue = 'hello';
-		var msg = rating.average_rating;
-		pub.publish(url, queue, msg);
+		if (reviewee_email == null || rating.average_rating == null){
+			console.log("ERROR: reviewee_email or average_rating is null!")
+		}
+		var msg = "[CREATE]" + "reviewee_email:" + reviewee_email + ";rating:" + rating.average_rating
+		publisher.publish(MSG_URL, QUEUE, msg)
 	})
 
 	app.delete('/api/v1/reviews', async function deleteAll(req, res) {
 		await app.reviewsService.deleteAll(req)
 		res.status(HTTP_NO_CONTENT).end()
+
+		var msg = "[DELETE]"
+		publisher.publish(MSG_URL, QUEUE, msg);
 	})
 
 	app.get('/api/v1/sleep', async function sleep(req, res) {
