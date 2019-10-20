@@ -4,7 +4,7 @@ const HTTP_CREATED = 201
 const HTTP_CONFLICT = 409
 
 module.exports = function (app) {
-	
+
 	app.get('/api/v1/reviews', async function readAll(req, res) {
 		var flag = await app.featureFlag('test')
 		if(flag)
