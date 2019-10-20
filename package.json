@@ -12,6 +12,7 @@
     },
     "dependencies": {
         "@sap/cds": "^3.16",
+        "amqplib": "^0.5.5",
         "express": "^4.17.1",
         "hdb": "^0.17.1"
     },

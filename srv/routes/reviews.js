@@ -2,6 +2,9 @@
 const HTTP_NO_CONTENT = 204
 const HTTP_CREATED = 201
 const HTTP_CONFLICT = 409
+const publisher = require('../utils/publisher')
+const MSG_URL = "amqp://localhost"
+const QUEUE = "endurance"
 
 module.exports = function(app) {
 
@@ -28,13 +31,29 @@ module.exports = function(app) {
 			return res.status(HTTP_CONFLICT).end()
 		}
 		const reviewee_email = req.body.reviewee_email
-		await app.reviewsService.getAverageRating(reviewee_email)		
+		var rating = await app.reviewsService.getAverageRating(reviewee_email, req)		
 		res.status(HTTP_CREATED).location(req.body.component_name).end()
+
+		if (reviewee_email == null || rating.average_rating == null){
+			console.log("ERROR: reviewee_email or average_rating is null!")
+		}
+		
+		var msg = JSON.stringify({
+			"type" : "create",
+			"contact" : reviewee_email,
+			"rating": rating.average_rating
+		});
+		publisher.publish(MSG_URL, QUEUE, JSON.stringify(msg))
 	})
 
 	app.delete('/api/v1/reviews', async function deleteAll(req, res) {
 		await app.reviewsService.deleteAll(req)
 		res.status(HTTP_NO_CONTENT).end()
+
+		var msg = JSON.stringify({
+			"type" : "delete",
+		});
+		publisher.publish(MSG_URL, QUEUE, msg);
 	})
 
 	app.get('/api/v1/sleep', async function sleep(req, res) {
