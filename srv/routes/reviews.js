@@ -16,8 +16,9 @@ module.exports = function (app) {
 		}
 		else
 		{
-			req.logger.info("Recovering Reviews")
-			res.send("App under maintenance")
+			var logText = "Reading of reviews is disabled at this moment"
+			req.logger.info(logText)
+			res.send(logText)
 		}
 	})
 	
@@ -55,8 +56,9 @@ module.exports = function (app) {
 		}
 		else
 		{
-			req.logger.info("Recovering Reviews")
-			res.send("App under maintenance")
+			var logText = "Creation of reviews is disabled at this moment"
+			req.logger.info(logText)
+			res.send(logText)
 		}
 	})
 	
